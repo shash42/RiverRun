@@ -1,5 +1,5 @@
 # Initialization
-# obstacle sounds, scoring displays, pep8recheck final code, gitlab.
+# pep8recheck final code
 from config import *
 import random
 import math
@@ -33,6 +33,7 @@ font_score = pygame.font.Font(font_texts, score_size)
 font_round_over = pygame.font.Font(font_texts, round_over_size)
 font_timer = pygame.font.Font(font_texts, timer_size)
 font_game_over = pygame.font.Font(font_texts, game_over_size)
+font_footer = pygame.font.Font(font_texts, footer_font_size)
 
 # Load images
 player1_image = pygame.image.load(player1_imgfile)
@@ -428,8 +429,27 @@ def update_winner(player1, player2):
     pygame.time.delay(round_delay)
 
 
-def half_round(player, start_top):
+def display_footer(round_num, show_right, prev_player):
+    # On the left side of the footer
+    past_round_info = "Round: " + str(round_num + 1) + "   |   P1 Wins: " + str(
+        players[0].rounds_won) + "   P2 Wins: " + str(players[1].rounds_won)
+    footer_left_text = font_footer.render(
+        past_round_info, True, screen_text_color)
+    text_x = footer_left_pos[0]
+    text_y = footer_left_pos[1]
+    screen.blit(footer_left_text, (text_x, text_y))
+    # On the right side of the footer
+    if show_right:
+        prev_player_info = "Opponent score: " + \
+            str(prev_player.obstacle_score) + "    Opponent Time: " + str(prev_player.time_taken)
+        footer_right_text = font_footer.render(
+            prev_player_info, True, screen_text_color)
+        text_x = footer_right_pos[0]
+        text_y = footer_right_pos[1]
+        screen.blit(footer_right_text, (text_x, text_y))
 
+
+def half_round(player, start_top, idx, round_num):
     # timing parameters
     global timer_started
     global start_time
@@ -445,7 +465,6 @@ def half_round(player, start_top):
 
     global running
     while running:
-
         screen.fill(river_color)
         # If quit is pressed half_round returns false
         for event in pygame.event.get():
@@ -454,7 +473,6 @@ def half_round(player, start_top):
             quit_check = check_movements(event, players[0], players[1])
             if not quit_check:
                 return False
-
         update_movements(players[0], players[1])
         check_boundaries(player)
 
@@ -479,6 +497,7 @@ def half_round(player, start_top):
             platform.draw_moving(player)
         display_score(player)
         display_time(passed_time)
+        display_footer(round_num, start_top, players[1 - idx])
 
         # Draw players
         player.draw()
@@ -504,12 +523,13 @@ def half_round(player, start_top):
             if start_top == 1:
                 # if whole round is over re-draw to show who won
                 screen.fill(river_color)
-                display_score(player)
-                display_time(passed_time)
                 for platform in platforms:
                     platform.draw()
                     platform.draw_fixed()
                     platform.draw_moving(player)
+                display_score(player)
+                display_time(passed_time)
+                display_footer(round_num, start_top, players[1 - idx])
                 update_winner(players[0], players[1])
             return True
 
@@ -567,12 +587,12 @@ def main():
     while rounds < num_of_rounds:
         mixer.music.play(-1)
         idx = rounds % 2    # Used to see which player starts at top
-        half_1 = half_round(players[idx], 0)
+        half_1 = half_round(players[idx], 0, idx, rounds)
         if not half_1:
             return
         mixer.music.play(-1)
         idx = 1 - idx
-        half_2 = half_round(players[idx], 1)
+        half_2 = half_round(players[idx], 1, idx, rounds)
         if not half_2:
             return
     #    print(players[0].rounds_won, players[1].rounds_won)

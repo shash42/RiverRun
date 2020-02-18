@@ -14,6 +14,8 @@ moving_obstacle_base_speed = [-1, 2, -1.25]  # fisher-ski-croc (-1, 2, -1.25)
 moving_obstacle_chance = [3, 3, 3]  # 1/x chance of not occuring
 croc_show_buffer = [200, 100]  # x, y distance in which croc shows
 
+# shift lists are for text placement
+# some text positionings
 title_font_size = 200
 font_texts = 'astron boy.ttf'
 font_titles = 'iomanoid.ttf'
@@ -21,8 +23,8 @@ title_shift = [-250, -150]
 space_color = (255, 255, 255)
 space_font_size = 50
 space_pos = [400, screen_height - 100]
-round_over_shift = [-100, -25]  # amount to shift round_over text to center
-winner_shift = [-200, -25]  # amount to shift who won text to center
+round_over_shift = [-100, -25]
+winner_shift = [-200, -25]
 round_over_size = 100
 score_size = 40
 score_text_pos = [2, 2]
@@ -31,15 +33,20 @@ timer_text_pos = [screen_width - 200, 2]
 game_over_size = 120
 game_over_shift = [-200, -150]
 game_over_delay = 2000
+footer_font_size = 26
+footer_left_pos = [10, screen_height - footer_font_size - 10]
+footer_right_pos = [screen_width - 410, screen_height - footer_font_size - 10]
 
+# other display and game variables
 screen_text_color = (0, 0, 0)
-round_delay = 1000
+round_delay = 2000
 num_of_rounds = 5
 speed_multiplier = 1.2
 fixed_obstacle_contribution = 5
 moving_obstacle_contribution = 10
 ticks_per_loop = 1000
 
+# string constants
 background_music = 'background.wav'
 player1_imgfile = 'player1.png'
 player2_imgfile = 'player2.png'
