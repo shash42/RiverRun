@@ -1,6 +1,8 @@
 # RiverRun
 
-This is a 2 player river-themed 3D game (the third dimension is time). Made as an assignment for the Introduction to Software Systems course using Pygame
+This is a 2 player river-themed 3D game (the third dimension is time). Made as an assignment for the Introduction to Software Systems course using Pygame.
+<br>
+The game has dimensions 1200x1000. Laptops (old) with low resolution will not be able to view the lower half of the game screen.
 
 # Game theme
 The task of the players is to cross from one side to the other going across multiple "safe" platforms. 
